@@ -18,6 +18,37 @@ function customise_checkout_field($checkout)
     echo '</div>';
 }
 ```
+### ADD CUSTOMFIELD IN CHECKOUT AND VALIDATE
+```
+/////#Add New Field#/////
+add_action( 'woocommerce_after_checkout_billing_form', 'add_extra_fields_after_billing_address',1,1)
+function add_extra_fields_after_billing_address() {
+  _e( "Referral:", "add_extra_fields");
+  ?>
+  <br>
+  <select name="add_referral" class="add_referral">
+      <option value="">Select Referral</option>
+    <option value="Google">Google</option>
+    <option value="Facebook">Facebook</option>
+    <option value="Other company">Other company</option>
+  </select>
+  <script>
+    jQuery(document).ready(function($){
+      $(document).ready(function() {
+        $('.add_referral').select2();
+      });
+    })
+  </script>
+  <?php 
+}
+/////#Add New Field Validation#/////
+add_action('woocommerce_after_checkout_validation', 'add_validate',10,2);
+function add_validate($data,$errors) { 
+  if ( isset( $_POST['add_referral'])  && empty( $_POST['add_referral'])){
+    $errors->add( 'validation', __( "<strong>Referral</strong> is a required field." ));
+  }
+}
+```
 ### ADD CUSTOM DATA ORDER BILLING
 ```
 add_action( 'woocommerce_admin_order_data_after_billing_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
