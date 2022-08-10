@@ -167,3 +167,19 @@ wc_update_product_stock_status($product_id, "outofstock");
 </table>
 </div>
 ```
+### FILTER PRODUCT BASED ON CUSTOM FIELD
+localhost/shop/?custom_text_field_delivery=24h
+```
+add_filter( 'woocommerce_product_query_meta_query', 'filter_products_with_custom_field', 10, 2 );
+function filter_products_with_custom_field( $meta_query, $query ) {
+    $meta_key = 'custom_text_field_delivery'; // <= Here define the meta key
+    
+    if ( ! is_admin() && isset($_GET[$meta_key]) && ! empty($_GET[$meta_key]) ) {
+        $meta_query[] = array(
+           'key'   => $meta_key,
+           'value' => esc_attr($_GET[$meta_key]),
+        );
+    }
+    return $meta_query;
+}
+```
