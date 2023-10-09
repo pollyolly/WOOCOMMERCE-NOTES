@@ -3,7 +3,7 @@
 Reference: https://therichpost.com/
 ```
 ### ADD CUSTOMFIELD IN CHECKOUT
-```
+```php
 add_action('woocommerce_before_checkout_form', 'customise_checkout_field');
  
 function customise_checkout_field($checkout)
@@ -22,7 +22,7 @@ function customise_checkout_field($checkout)
 }
 ```
 ### ADD CUSTOMFIELD IN CHECKOUT AND VALIDATE
-```
+```php
 /////#Add New Field#/////
 add_action( 'woocommerce_after_checkout_billing_form', 'add_extra_fields_after_billing_address',1,1)
 function add_extra_fields_after_billing_address() {
@@ -53,14 +53,14 @@ function add_validate($data,$errors) {
 }
 ```
 ### ADD CUSTOM DATA ORDER BILLING
-```
+```php
 add_action( 'woocommerce_admin_order_data_after_billing_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
 function my_custom_checkout_field_display_admin_order_meta($order){
        echo "Your Custom Text: Therichpost";
 }
 ```
 ### PDF DOWNLOAD LINK IN SINGLE PRODUCT PAGE
-```
+```php
 add_action('woocommerce_before_single_product_summary','download_pdf',11);
 function download_pdf()
 {
@@ -68,14 +68,14 @@ function download_pdf()
 }
 ```
 ### CHECKOUT PAGE NOTICE
-```
+```php
 add_action('woocommerce_before_checkout_form', 'my_custom_message');
 function my_custom_message() {
         wc_print_notice( __('Enter your custom message'), 'notice' );
 }
 ```
 ### MAKE PRODUCT OUT OF STOCK AFTER ORDER
-```
+```php
 add_action( 'woocommerce_thankyou', 'change_product_status', 10, 1 );
 function change_product_status( $order_id ) {
 if ( ! $order_id )
@@ -89,7 +89,7 @@ wc_update_product_stock_status($product_id, "outofstock");
 }
 ```
 ### CUSTOM  SEARCH
-```
+```php
 <form method="get" id="productS">
 <input type="text" name="searchtxt" class="" />
 <button type="search"><i class="icon-search searcBtn"></i></button>
@@ -125,7 +125,7 @@ wc_update_product_stock_status($product_id, "outofstock");
 </script>
 ```
 ### SHOW PRODUCTS IN FRONTEND
-```
+```php
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -169,7 +169,7 @@ wc_update_product_stock_status($product_id, "outofstock");
 ```
 ### FILTER PRODUCT BASED ON CUSTOM FIELD
 localhost/shop/?custom_text_field_delivery=24h
-```
+```php
 add_filter( 'woocommerce_product_query_meta_query', 'filter_products_with_custom_field', 10, 2 );
 function filter_products_with_custom_field( $meta_query, $query ) {
     $meta_key = 'custom_text_field_delivery'; // <= Here define the meta key
